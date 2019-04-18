@@ -166,8 +166,8 @@ int FatFSImage::main(int argc, char *argv[])
                         printf("  filesystem sector size: %d\n", fs->ssize);
                         printf("  filesystem sectors: %d\n", image_bytes / fs->ssize);
                         printf("  filesystem cluster size: %d\n", fs->csize * fs->ssize);
-                        printf("  filesystem total clusters: %d\n", fs->n_fatent - 2);
-                        printf("  filesystem free clusters: %d\n", nfree);
+                        printf("  filesystem total clusters: %lu\n", fs->n_fatent - 2);
+                        printf("  filesystem free clusters: %lu\n", nfree);
                         
                         err = ESP_OK;
                     }
@@ -261,7 +261,7 @@ esp_err_t FatFSImage::create_image()
         fwrite(buf, 1, len, image);
         if (ferror(image))
         {
-            ESP_LOGE(TAG, "Write failed with %d for '%s'", errno, args.image->filename);
+            ESP_LOGE(TAG, "Write failed with %d for '%s'", errno, args.image->filename[0]);
             return ESP_FAIL;
         }
     }
@@ -612,7 +612,7 @@ esp_err_t FatFSImage::erase_sector(size_t sector)
 
 esp_err_t FatFSImage::erase_range(size_t start_address, size_t size)
 {
-    ESP_LOGV(TAG, "%s - add=0x%08x size=%d", __func__, (uint32_t) start_address, size);
+    ESP_LOGV(TAG, "%s - add=0x%08x size=%lu", __func__, (uint32_t) start_address, size);
 
     if (fseek(image, start_address, SEEK_SET) == -1)
     {
@@ -640,7 +640,7 @@ esp_err_t FatFSImage::erase_range(size_t start_address, size_t size)
 
 esp_err_t FatFSImage::write(size_t addr, const void *src, size_t size)
 {
-    ESP_LOGV(TAG, "%s - addr=0x%08x size=%d", __func__, (uint32_t) addr, size);
+    ESP_LOGV(TAG, "%s - addr=0x%08x size=%lu", __func__, (uint32_t) addr, size);
 
     if (fseek(image, addr, SEEK_SET) == -1)
     {
@@ -658,7 +658,7 @@ esp_err_t FatFSImage::write(size_t addr, const void *src, size_t size)
 
 esp_err_t FatFSImage::read(size_t addr, void *dest, size_t size)
 {
-    ESP_LOGV(TAG, "%s - addr=0x%08x size=%d", __func__, (uint32_t) addr, size);
+    ESP_LOGV(TAG, "%s - addr=0x%08x size=%lu", __func__, (uint32_t) addr, size);
 
     if (fseek(image, addr, SEEK_SET) == -1)
     {
