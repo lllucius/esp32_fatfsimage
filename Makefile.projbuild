@@ -1,8 +1,8 @@
 
 
-fat: $(BUILD_DIR_BASE)/fatfsimage/fatfsimage
+fat: $(BUILD_DIR_BASE)/esp32_fatfsimage/fatfsimage
 	$< $(CONFIG_FATFSIMAGE_IMAGE) $(CONFIG_FATFSIMAGE_SIZE) $(CONFIG_FATFSIMAGE_SRC)
 
-fat-flash: $(BUILD_DIR_BASE)/fatfsimage/fatfsimage
+fat-flash: $(BUILD_DIR_BASE)/esp32_fatfsimage/fatfsimage
 	$(ESPTOOLPY_WRITE_FLASH) $(CONFIG_FATFSIMAGE_OFFSET) $(CONFIG_FATFSIMAGE_IMAGE)
 

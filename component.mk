@@ -16,7 +16,7 @@ CPPFLAGS = -D_XOPEN_SOURCE=500 \
 
 CFLAGS = -O0 -g
 
-CXXFLAGS = $(CFLAGS)
+CXXFLAGS = $(CFLAGS) -std=c++0x
 
 INCLUDES = $(COMPONENT_PATH)/private \
            $(BUILD_DIR_BASE)/include \
@@ -67,6 +67,6 @@ $(COMPONENT_BUILD_DIR)/ffunicode.o: ${IDF_PATH}/components/fatfs/src/ffunicode.c
 $(COMPONENT_BUILD_DIR)/fatfsimage: $(OBJS)
 	$(CXX) $(CFLAGS) $(CPPFLAGS) $(addprefix -I ,$(INCLUDES)) $(OBJS) -o $@ -lc
 	# Create dummy archive to satisfy main app build
-	echo "!<arch>" >$(COMPONENT_BUILD_DIR)/libfatfsimage.a
+	echo "!<arch>" >$(COMPONENT_BUILD_DIR)/libesp32_fatfsimage.a
 
 .PHONY: build
